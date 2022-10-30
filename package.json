@@ -1,0 +1,28 @@
+{
+  "name": "simple-oracle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kerala-Blockchain-Academy/Simple-Oracle.git"
+  },
+  "author": "Ananthan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kerala-Blockchain-Academy/Simple-Oracle/issues"
+  },
+  "homepage": "https://github.com/Kerala-Blockchain-Academy/Simple-Oracle#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.12.1"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^2.1.0",
+    "dotenv": "^16.0.3",
+    "web3": "^1.8.0"
+  }
+}
