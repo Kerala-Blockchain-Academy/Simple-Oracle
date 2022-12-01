@@ -1,30 +1,32 @@
 const Web3 = require('web3');
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 require('dotenv').config();
+const axios = require("axios");
 
 const signProvider = new HDWalletProvider(process.env.SEED, `wss://goerli.infura.io/ws/v3/433dbe41c8664d74a0a191d9e655f643`);
 const web3Sign = new Web3(signProvider);
 const web3Listen = new Web3('wss://goerli.infura.io/ws/v3/433dbe41c8664d74a0a191d9e655f643');
+let MyContract= require('./build/contracts/OracleV2.json');
+let MyContractAbi = MyContract.abi;
+let MyContractAddr = MyContract.networks[5].address;
+MyContractSign = new web3Sign.eth.Contract(MyContractAbi, MyContractAddr);
+MyContractListen = new web3Listen.eth.Contract(MyContractAbi, MyContractAddr);
+AccountAddress = "0x7b0c33284bA38A7401F97b9683242Cff1B3a2d84";
 
-let { abi } = require('./artifacts/contracts/OracleV2.sol/OracleV2.json');
-let { deployer, address } = require('./Details2.json');
-MyContractSign = new web3Sign.eth.Contract(abi, address);
-MyContractListen = new web3Listen.eth.Contract(abi, address);
-AccountAddress = deployer;
-ContractAddress = address;
 
 // a delay functon
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
-eventOracleV2();
+eventOracleV1();
 
 async function eventOracleV1() {
-    MyContractListen.events.TempDataRequest()
+    MyContractListen.events.PriceDataRequest()
         .on("data", async (result) => {
             console.log("Event recived")
-            let temp = "27 Celcius"
-            console.log("Read Data from truth point, temprature is:", temp)
-            await MyContractSign.methods.updateTempData(temp)
+            let data1 = await axios.get(" https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR")
+            let usd = JSON.stringify(data1.data.USD);
+            console.log("Read Data from truth point, USD rate is:", usd)
+            await MyContractSign.methods.updatePriceData(usd)
             .send({ from: AccountAddress, gasLimit: "927000" })
             console.log("Updated on chain oracle contract")
         })
@@ -38,7 +40,8 @@ async function eventOracleV2() {
                 maxAttempts: 5,
                 onTimeout: false
         },
-        address: ContractAddress,
+        event: ['PriceDataRequest'],
+        address: MyContractAddr,
         topics: []
         };
         
@@ -47,9 +50,10 @@ async function eventOracleV2() {
             else console.log(error);
         }).on("data", async function(log){
             console.log("Event recived")
-            let temp = "28 Celcius"
-            console.log("Read Data from truth point, temprature is:", temp)
-            await MyContractSign.methods.updateTempData(temp)
+            let data1 = await axios.get(" https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR")
+            let usd = JSON.stringify(data1.data.USD);
+            console.log("Read Data from truth point, USD rate is:", usd)
+            await MyContractSign.methods.updatePriceData(usd)
             .send({ from: AccountAddress, gasLimit: "927000" })
             console.log("Updated on chain oracle contract")
         })

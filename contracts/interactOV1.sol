@@ -10,7 +10,7 @@ contract CallOracle {
         OracleV1Obj = OracleV1(OracleV1Addr);
     }
 
-    function getTempData() public view returns (string memory) {
-        return OracleV1Obj.tempData();
+    function getPriceData() public view returns (string memory) {
+        return OracleV1Obj.priceData();
     }
 }
