@@ -1,18 +1,19 @@
+const hre = require("hardhat");
 const fs = require("fs");
 
 main = async () => {
-  const OracleV1 = await ethers.getContractFactory("OracleV1");
-  const oracleObj = await OracleV1.deploy();
+  const oracleObj = await hre.ethers.deployContract("OracleV1");
+  // const oracleObj = await OracleV1.deploy();
 
-  await oracleObj.deployed();
+  await oracleObj.waitForDeployment();
 
   console.log(
-    `${oracleObj.signer.address} deployed ${oracleObj.address}`
+    `${oracleObj.runner.address} deployed ${oracleObj.target}`
   );
 
   let details = {
-    deployer : oracleObj.signer.address,
-    address : oracleObj.address
+    deployer : oracleObj.runner.address,
+    address : oracleObj.target
   };
 
   fs.writeFile('./Details1.json', JSON.stringify(details), (err) => {
