@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.17;
+pragma solidity 0.8.19;
 
 import "./OracleV2.sol";
 
@@ -11,10 +11,10 @@ contract CallOracle {
     }
 
     function requestUpdate() public {
-        OracleV2Obj.requestTempData();
+        OracleV2Obj.requestPriceData();
     }
 
-    function getTempData() public view returns (string memory) {
-        return OracleV2Obj.tempData();
+    function getPriceData() public view returns (string memory) {
+        return OracleV2Obj.priceData();
     }
 }
