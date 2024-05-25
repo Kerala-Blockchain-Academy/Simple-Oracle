@@ -25,7 +25,7 @@
 //         console.log("Read Data from truth point, USD rate is:", usd)
 //         console.log(instance1);
 //         let inst = await instance1.app()
-//         let txnReceipt = await inst.setTempData(usd);
+//         let txnReceipt = await inst.setPriceData(usd);
         
 //        // console.log(txnReceipt);
 //         console.log("Updated on chain oracle contract")
@@ -49,7 +49,7 @@ async function initOracle(){
         // console.log(instance);
         console.log(abi);
         // let inst = await instance1.app()
-        let txnReceipt = await instance.setTempData(usd);
+        let txnReceipt = await instance.setPriceData(usd);
         
        console.log(txnReceipt);
         console.log("Updated on-chain oracle contract")
