@@ -19,12 +19,13 @@ const timer = ms => new Promise(res => setTimeout(res, ms))
 eventOracleV2();
 
 async function eventOracleV1() {
-    MyContractListen.events.TempDataRequest()
+    MyContractListen.events.PriceDataRequest()
         .on("data", async (result) => {
             console.log("Event recived")
-            let temp = "27 Celcius"
-            console.log("Read Data from truth point, temprature is:", temp)
-            await MyContractSign.methods.updateTempData(temp)
+            let data1 = await axios.get(" https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR")
+//         let  usd= JSON.stringify(data1.data.USD);
+            
+            await MyContractSign.methods.updatePriceData(usd)
             .send({ from: AccountAddress, gasLimit: "927000" })
             console.log("Updated on chain oracle contract")
         })
@@ -47,9 +48,9 @@ async function eventOracleV2() {
             else console.log(error);
         }).on("data", async function(log){
             console.log("Event recived")
-            let temp = "28 Celcius"
-            console.log("Read Data from truth point, temprature is:", temp)
-            await MyContractSign.methods.updateTempData(temp)
+            let data1 = await axios.get(" https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR")
+//         let  usd= JSON.stringify(data1.data.USD);
+            await MyContractSign.methods.updatePriceData(usd)
             .send({ from: AccountAddress, gasLimit: "927000" })
             console.log("Updated on chain oracle contract")
         })
