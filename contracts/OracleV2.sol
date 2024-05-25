@@ -2,15 +2,15 @@
 pragma solidity 0.8.17;
 
 contract OracleV2 {
-    string public tempData;
+    string public priceData;
 
-    event TempDataRequest();
+    event PriceDataRequest();
 
-    function requestTempData() public {
-        emit TempDataRequest();
+    function requestPriceData() public {
+        emit PriceDataRequest();
     }
 
-    function updateTempData(string memory _tempData) public {
-        tempData = _tempData;
+    function updatePriceData(string memory _tempData) public {
+        priceData = _priceData;
     }
 }
